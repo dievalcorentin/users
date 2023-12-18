@@ -1,4 +1,4 @@
-package com.graphmytech.AdministrationUsers.Table;
+package com.graphmytech.administrationusers.table;
 
 public class User{
 

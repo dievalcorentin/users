@@ -1,7 +1,7 @@
-package com.graphmytech.AdministrationUsers.Controller;
+package com.graphmytech.administrationusers.controller;
 
-import com.graphmytech.AdministrationUsers.Repository.UserRepository;
-import com.graphmytech.AdministrationUsers.Table.User;
+import com.graphmytech.administrationusers.repository.UserRepository;
+import com.graphmytech.administrationusers.table.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
