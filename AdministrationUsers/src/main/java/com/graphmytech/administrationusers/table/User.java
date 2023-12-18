@@ -1,5 +1,9 @@
 package com.graphmytech.administrationusers.table;
 
+import jakarta.persistence.Entity;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@Entity
 public class User{
 
     private String name;
