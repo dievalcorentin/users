@@ -21,6 +21,7 @@ public class UserController {
     // Endpoint to create a new user
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        // DTO: Data to Object
         User savedUser = userRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }

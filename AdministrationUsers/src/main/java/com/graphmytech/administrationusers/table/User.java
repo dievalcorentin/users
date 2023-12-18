@@ -1,27 +1,21 @@
 package com.graphmytech.administrationusers.table;
 
-import jakarta.persistence.Entity;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class User{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "age")
     private Integer age;
 
-    public String getName(){
-        return name;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public Integer getAge(){
-        return age;
-    }
-
-    public void setAge(Integer age){
-        this.age = age;
-    }
 }
