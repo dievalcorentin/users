@@ -6,6 +6,10 @@ import com.graphmytech.administrationusers.service.UserService;
 import com.graphmytech.administrationusers.mapper.UserMapper;
 
 import com.graphmytech.administrationusers.model.User;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +31,32 @@ public class UserController {
         this.userService = userService;
     }
 
+    // Endpoint to list all users
+    @Operation(summary = "Get list of Users", description = "This endpoint allows retrieve the list of users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful"),
+    })
+    @GetMapping(value = "/list", produces = "application/json")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+
     // Endpoint to create a new user
+    @Operation(summary = "Create a User", description = "This endpoint allows to create a User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User Successfully created"),
+    })
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO createUserRequestDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody
+                                                  @Parameter(name = "name", description = "Name of the User", example = "Toto")
+                                                  CreateUserDTO createUserRequestDTO ) {
 
         User savedUser = userService.createUser(createUserRequestDTO.getName(), createUserRequestDTO.getAge());
 
         UserDTO response = UserMapper.map(savedUser);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @GetMapping(value = "/list", produces = "application/json")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 //

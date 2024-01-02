@@ -42,10 +42,23 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(existingUser);
     }
 
-
+    // Method to retrive the list of users
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    private UserDTO convertToDto(User user) {
+        // Convert User entity to UserDTO
+        UserDTO dto = new UserDTO();
+
+        dto.setName(user.getName());
+        dto.setAge(user.getAge());
+        // Set other properties as needed
+        return dto;
     }
 
     // Method to delete a user
