@@ -1,4 +1,7 @@
 spring:
+  security:
+    user:
+      name: dev
   jpa:
     hibernate:
       ddl-auto: create-drop
