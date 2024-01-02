@@ -1,6 +1,6 @@
 package com.graphmytech.administrationusers.repository;
 
-import com.graphmytech.administrationusers.table.User;
+import com.graphmytech.administrationusers.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

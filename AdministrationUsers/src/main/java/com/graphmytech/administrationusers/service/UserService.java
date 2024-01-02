@@ -3,6 +3,8 @@ package com.graphmytech.administrationusers.service;
 import com.graphmytech.administrationusers.dto.UserDTO;
 import com.graphmytech.administrationusers.model.User;
 
+import java.util.List;
+
 public interface UserService {
 
 
@@ -21,6 +23,12 @@ public interface UserService {
      * @return
      */
     User updateUser(Long userId, UserDTO userDTO);
+
+    /**
+     * Retrieve all users from DB
+     * @return
+     */
+    List<User> getAllUsers();
 
     /**
      * Delete the user with the given userId

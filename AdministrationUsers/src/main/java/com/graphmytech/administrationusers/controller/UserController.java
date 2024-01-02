@@ -5,14 +5,19 @@ import com.graphmytech.administrationusers.dto.UserDTO;
 import com.graphmytech.administrationusers.service.UserService;
 import com.graphmytech.administrationusers.mapper.UserMapper;
 
+import com.graphmytech.administrationusers.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
-@RestController
-@RequestMapping("/api/users")
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+
+@RestController()
+@RequestMapping(value = "/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -23,10 +28,19 @@ public class UserController {
     }
 
     // Endpoint to create a new user
-    @PostMapping("/create")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        UserDTO savedUser = userService.createUser(userDTO);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO createUserRequestDTO) {
+
+        User savedUser = userService.createUser(createUserRequestDTO.getName(), createUserRequestDTO.getAge());
+
+        UserDTO response = UserMapper.map(savedUser);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/list", produces = "application/json")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 //
