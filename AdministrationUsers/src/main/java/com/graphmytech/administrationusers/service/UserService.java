@@ -28,7 +28,7 @@ public interface UserService {
      * Retrieve all users from DB
      * @return
      */
-    List<UserDTO> getAllUsers();
+    List<User> getAllUsers();
 
     /**
      * Delete the user with the given userId

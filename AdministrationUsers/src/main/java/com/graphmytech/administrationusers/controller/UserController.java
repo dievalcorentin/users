@@ -37,26 +37,22 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Successful"),
     })
     @GetMapping(value = "/list", produces = "application/json")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return UserMapper.map(users);
     }
 
 
     // Endpoint to create a new user
+
     @Operation(summary = "Create a User", description = "This endpoint allows to create a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User Successfully created"),
     })
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<UserDTO> createUser(@RequestBody
-                                                  @Parameter(name = "name", description = "Name of the User", example = "Toto")
-                                                  CreateUserDTO createUserRequestDTO ) {
-
+    public UserDTO createUser(@RequestBody CreateUserDTO createUserRequestDTO ) {
         User savedUser = userService.createUser(createUserRequestDTO.getName(), createUserRequestDTO.getAge());
-
-        UserDTO response = UserMapper.map(savedUser);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return UserMapper.map(savedUser);
     }
 
 //
