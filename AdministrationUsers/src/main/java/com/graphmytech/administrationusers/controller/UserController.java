@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +38,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful"),
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping(value = "/list", produces = "application/json")
     public List<UserDTO> getAllUsers() {
         List<User> users = userService.getAllUsers();
@@ -44,11 +47,11 @@ public class UserController {
 
 
     // Endpoint to create a new user
-
     @Operation(summary = "Create a User", description = "This endpoint allows to create a User")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User Successfully created"),
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public UserDTO createUser(@RequestBody CreateUserDTO createUserRequestDTO ) {
         User savedUser = userService.createUser(createUserRequestDTO.getName(), createUserRequestDTO.getAge());
