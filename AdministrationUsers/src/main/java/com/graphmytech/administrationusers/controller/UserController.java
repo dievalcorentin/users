@@ -58,6 +58,7 @@ public class UserController {
         return UserMapper.map(savedUser);
     }
 
+
 //
 //    // Endpoint to get details of a user by ID
 //
