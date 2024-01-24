@@ -9,9 +9,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserDTO {
-    @Schema(name = "User Name", example = "Toto", required = true)
+    @Schema(description = "User Name", example = "Toto")
     private String name;
-    @Schema(name = "User Age", example = "25", required = true)
+    @Schema(description = "User Age", example = "25")
     private Integer age;
 
     // Default constructor

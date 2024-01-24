@@ -49,7 +49,7 @@ public class UserController {
     // Endpoint to create a new user
     @Operation(summary = "Create a User", description = "This endpoint allows to create a User")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User Successfully created"),
+            @ApiResponse(responseCode = "200", description = "User Successfully created"),
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
