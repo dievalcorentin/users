@@ -16,17 +16,11 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "age")
-    private Integer age;
-
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
-    private String passwordHash;
+    private String password;
 
     @Column(name = "last_usage_date")
     private LocalDateTime lastUsageDate;

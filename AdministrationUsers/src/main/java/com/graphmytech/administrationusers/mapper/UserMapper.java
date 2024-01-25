@@ -11,8 +11,10 @@ public class UserMapper {
     public static UserDTO map(User user) {
         UserDTO userDTO = new UserDTO();
 
-        userDTO.setAge(user.getAge());
-        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
 
         return userDTO;
     }
@@ -23,4 +25,5 @@ public class UserMapper {
 //              .map(user->UserMapper.map(user))
                 .collect(Collectors.toList());
     }
+
 }

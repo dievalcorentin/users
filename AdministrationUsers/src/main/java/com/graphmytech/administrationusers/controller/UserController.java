@@ -54,8 +54,28 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
     public UserDTO createUser(@RequestBody CreateUserDTO createUserRequestDTO ) {
-        User savedUser = userService.createUser(createUserRequestDTO.getName(), createUserRequestDTO.getAge());
+        User savedUser = userService.createUser(createUserRequestDTO.getEmail(), createUserRequestDTO.getPassword());
         return UserMapper.map(savedUser);
+    }
+
+
+    // Endpoint to update user details
+    @Operation(summary = "Update User Details", description = "This endpoint allows updating user details")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User details successfully updated"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDetails) {
+        User userToUpdate = UserMapper.map(userDetails); // Convert UserDTO to User entity
+        User updatedUser = userService.updateUser(id, userToUpdate);
+        if (updatedUser != null) {
+            UserDTO updatedUserDTO = UserMapper.map(updatedUser); // Convert User entity to UserDTO
+            return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 

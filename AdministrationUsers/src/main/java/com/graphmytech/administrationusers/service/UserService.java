@@ -11,18 +11,18 @@ public interface UserService {
     /**
      *
      * @param name
-     * @param age
+     * @param password
      * @return
      */
-    User createUser(String name, Integer age);
+    User createUser(String name, String password);
 
     /**
      *
      * @param userId
-     * @param userDTO
+     * @param user
      * @return
      */
-    User updateUser(Long userId, UserDTO userDTO);
+    User updateUser(Long userId, UserDTO user);
 
     /**
      * Retrieve all users from DB
@@ -35,4 +35,5 @@ public interface UserService {
      * @param userId the userId we want to delete
      */
     void deleteUser(Long userId);
+
 }

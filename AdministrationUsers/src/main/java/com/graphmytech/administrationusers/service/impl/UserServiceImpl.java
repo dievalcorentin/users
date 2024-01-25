@@ -1,46 +1,51 @@
 package com.graphmytech.administrationusers.service.impl;
 
 import com.graphmytech.administrationusers.dto.UserDTO;
-import com.graphmytech.administrationusers.mapper.UserMapper;
 import com.graphmytech.administrationusers.repository.UserRepository;
 import com.graphmytech.administrationusers.service.UserService;
 import com.graphmytech.administrationusers.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
+import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Method to create a new user
     @Override
-    public User createUser(String name, Integer age) {
+    public User createUser(String name, String password) {
         User user = new User();
-        user.setName(name);
-        user.setAge(age);
+        user.setEmail(name);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setCreatedDate(LocalDateTime.now());
+        user.setCountTotalProject(0);
+        user.setMaxCountProject(10);
+        user.setMaxCountRequest(10);
         return userRepository.save(user);
     }
 
 
-    // Method to update an existing user
-    @Override
-    public User updateUser(Long userId, UserDTO userDTO) {
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        existingUser.setName(userDTO.getName());
-        existingUser.setAge(userDTO.getAge());
-        return userRepository.save(existingUser);
-    }
+//    // Method to update an existing user
+//    @Override
+//    public User updateUser(Long userId, UserDTO userDTO) {
+//        User existingUser = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//        existingUser.setEmail(userDTO.getEmail());
+//        existingUser.setPassword(userDTO.getPassword());
+//        return userRepository.save(existingUser);
+//    }
 
     // Method to retrive the list of users
     @Override
@@ -57,4 +62,18 @@ public class UserServiceImpl implements UserService {
     private void deleteAllUser() {
         userRepository.deleteAll();
     }
+
+    @Override
+    public User updateUser(Long id, UserDTO userDetails) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            us
+            user.setFirstName(userDetails.getFirstName());
+            user.setLastName(userDetails.getLastName());
+            userRepository.save(user);
+            return user;
+        }
+        return null;
+    }
+
 }
